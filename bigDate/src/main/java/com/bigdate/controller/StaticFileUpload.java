@@ -3,6 +3,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class StaticFileUpload {
     
-    public static ConcurrentHashMap<String,String[]> conFile = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String,ThreadLocal<String[]>> conFile = new ConcurrentHashMap<>();
 
 }
