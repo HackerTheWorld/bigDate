@@ -13,6 +13,8 @@ public class BigDataUploadController{
     @PostMapping("/uploadBigData")
     public JSONObject uploadBigData(){
         JSONObject jsonObject = new JSONObject();
+
+        
         return jsonObject;
     }
 
