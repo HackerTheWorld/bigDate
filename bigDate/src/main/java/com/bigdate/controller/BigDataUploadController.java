@@ -47,7 +47,6 @@ public class BigDataUploadController{
             }
             MergePathFile.merge(fileGroup, partFile.getOriginalFilename());
         } catch (IllegalStateException |IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return jsonObject;
