@@ -2,3 +2,5 @@
 bigDate/.settings
 bigDate/.vscode
 bigDate/target
+bigDate/uploadFile
+bigDate/test
