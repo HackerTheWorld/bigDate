@@ -3,8 +3,6 @@ package com.bigdate.controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.alibaba.fastjson.JSONObject;
 
 import org.springframework.stereotype.Controller;
