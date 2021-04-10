@@ -1,7 +1,6 @@
 package com.bigdate.controller;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
@@ -24,11 +23,12 @@ public class MergePathFile {
                        long posSize = inFileChannel.transferTo(0, 1000,outChannel);
                        pos = pos + posSize;
                     }
-                    System.out.println(outChannel.size());
                 }catch(Exception e){
                     e.printStackTrace();
                 }
+                inPath.toFile().delete();
             }
+            StaticFileUpload.conFile.remove(fileGroup);
         }catch(Exception e){
             e.printStackTrace();
         }

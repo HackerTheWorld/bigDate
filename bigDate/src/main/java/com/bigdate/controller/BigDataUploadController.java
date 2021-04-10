@@ -30,17 +30,19 @@ public class BigDataUploadController{
             String filePath = "D:/javaWorkSpace/bigDate/bigDate/uploadFile/"+fileGroup+fileIndex;
             Path path = Paths.get(filePath);
             partFile.transferTo(path);
-            String[] filePaths;
-            if(StaticFileUpload.conFile.containsKey(fileGroup)){
-                filePaths = StaticFileUpload.conFile.get(fileGroup);
-            }else{
-                filePaths = new String[fileLength];
-            }
-            filePaths[fileIndex-1]= filePath;
-            StaticFileUpload.conFile.put(fileGroup, filePaths);
-            for(String str:StaticFileUpload.conFile.get(fileGroup)){
-                if(ObjectUtils.isEmpty(str)){
-                    return jsonObject;
+            synchronized (StaticFileUpload.conFile){
+                String[] filePaths;
+                if(StaticFileUpload.conFile.containsKey(fileGroup)){
+                    filePaths = StaticFileUpload.conFile.get(fileGroup);
+                }else{
+                    filePaths = new String[fileLength];
+                }
+                filePaths[fileIndex-1]= filePath;
+                StaticFileUpload.conFile.put(fileGroup, filePaths);
+                for(String str:StaticFileUpload.conFile.get(fileGroup)){
+                    if(ObjectUtils.isEmpty(str)){
+                        return jsonObject;
+                    }
                 }
             }
             MergePathFile.merge(fileGroup, partFile.getOriginalFilename());
