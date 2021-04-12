@@ -24,6 +24,7 @@ public class BigDataUploadController{
                                     @RequestParam("fileIndex") Integer fileIndex,
                                     @RequestParam("fileGroup") String fileGroup){
         JSONObject jsonObject = new JSONObject();
+        boolean flage = true;
         try {
             String filePath = "D:/javaWorkSpace/bigDate/bigDate/uploadFile/"+fileGroup+fileIndex;
             Path path = Paths.get(filePath);
@@ -40,13 +41,14 @@ public class BigDataUploadController{
                 StaticFileUpload.conFile.put(fileGroup, filePaths);
                 for(String str:StaticFileUpload.conFile.get(fileGroup).getStrs()){
                     if(ObjectUtils.isEmpty(str)){
-                        return jsonObject;
+                        flage = false;
+                        break;
                     }
                 }
                 filePaths.unLock();
-                // filePaths.onLock();
-                // filePaths.unLock();
-            MergePathFile.merge(fileGroup, partFile.getOriginalFilename());
+                if(flage){
+                    MergePathFile.merge(fileGroup, partFile.getOriginalFilename());
+                }
         } catch (IllegalStateException |IOException e) {
             e.printStackTrace();
         }

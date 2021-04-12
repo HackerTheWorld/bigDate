@@ -22,6 +22,8 @@ public class SafeList {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }finally{
+            reentrantLock.unlock();
         }
     }
 
@@ -34,6 +36,8 @@ public class SafeList {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }finally{
+            reentrantLock.unlock();
         }
         return null;
     }
@@ -47,17 +51,15 @@ public class SafeList {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }finally{
+            reentrantLock.unlock();
         }
         return null;
     }
 
     public void onLock(){
         try {
-            if(reentrantLock.tryLock()){
-                reentrantLock.lock();
-            }else{
-                System.out.println("操，老子明明释放锁了啊");
-            }
+            reentrantLock.lock();
         } catch (Exception e) {
             //TODO: handle exception
             e.printStackTrace();
