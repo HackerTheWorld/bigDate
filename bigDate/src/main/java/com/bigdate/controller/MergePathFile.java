@@ -9,12 +9,12 @@ import java.nio.file.Paths;
 public class MergePathFile {
     
     public static String merge(String fileGroup,String fileName){
-        ThreadLocal<String[]> cop = StaticFileUpload.conFile.get(fileGroup);
+        SafeList cop = StaticFileUpload.conFile.get(fileGroup);
         String fileFinalPath = "D:/javaWorkSpace/bigDate/bigDate/uploadFile/"+fileName;
         Path tPath = Paths.get(fileFinalPath);
         try(FileChannel outChannel = new FileOutputStream(tPath.toFile(),true).getChannel()){
-            for(int i=0;i<cop.get().length;i++){
-                Path inPath = Paths.get(cop.get()[i]);
+            for(int i=0;i<cop.getStrs().length;i++){
+                Path inPath = Paths.get(cop.getStrs()[i]);
                 
                 try(FileChannel inFileChannel = new FileInputStream(inPath.toFile()).getChannel()){
                     long pos = 0;

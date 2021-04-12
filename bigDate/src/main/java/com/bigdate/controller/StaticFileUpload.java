@@ -1,8 +1,8 @@
 package com.bigdate.controller;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Hashtable;
 
 public class StaticFileUpload {
     
-    public static ConcurrentHashMap<String,ThreadLocal<String[]>> conFile = new ConcurrentHashMap<>();
+    public static Hashtable<String,SafeList> conFile = new Hashtable<>();
 
 }

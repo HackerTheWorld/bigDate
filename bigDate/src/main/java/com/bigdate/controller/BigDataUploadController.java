@@ -28,19 +28,24 @@ public class BigDataUploadController{
             String filePath = "D:/javaWorkSpace/bigDate/bigDate/uploadFile/"+fileGroup+fileIndex;
             Path path = Paths.get(filePath);
             partFile.transferTo(path);
-            ThreadLocal<String[]> filePaths = new ThreadLocal<>();
+            SafeList filePaths ;
                 if(StaticFileUpload.conFile.containsKey(fileGroup)){
                     filePaths = StaticFileUpload.conFile.get(fileGroup);
                 }else{
-                    filePaths.set(new String[fileLength]);
+                    String[] strs = new String[fileLength];
+                    filePaths = new SafeList(strs);
                 }
-                filePaths.get()[fileIndex-1]= filePath;
+                filePaths.onLock();
+                filePaths.setStrs(fileIndex-1, filePath);
                 StaticFileUpload.conFile.put(fileGroup, filePaths);
-                for(String str:StaticFileUpload.conFile.get(fileGroup).get()){
+                for(String str:StaticFileUpload.conFile.get(fileGroup).getStrs()){
                     if(ObjectUtils.isEmpty(str)){
                         return jsonObject;
                     }
                 }
+                filePaths.unLock();
+                // filePaths.onLock();
+                // filePaths.unLock();
             MergePathFile.merge(fileGroup, partFile.getOriginalFilename());
         } catch (IllegalStateException |IOException e) {
             e.printStackTrace();
